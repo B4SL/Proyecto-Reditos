@@ -53,7 +53,7 @@ jobs:
         kubectl apply -f Kubernetes/service.yaml
       continue-on-error: true
 
-  - name: Validate Kubernetes configuration
+    - name: Validate Kubernetes configuration
       run: |
         kubectl apply -f k8s/deployment.yaml --dry-run=client
         kubectl apply -f k8s/service.yaml --dry-run=client
