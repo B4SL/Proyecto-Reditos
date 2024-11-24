@@ -29,27 +29,35 @@ jobs:
 
     - name: Test Docker Image
       run: |
-        docker run --rm ${{ secrets.DOCKERHUB_USERNAME }}/hello-app:1.0 echo "Docker image is working"
+        docker run --rm ${{ secrets.DOCKERHUB_USERNAME }}/hello-app:1.0 /bin/sh -c "echo 'Docker image is working'"
 
 
-  #deploy-to-kubernetes:
-  #  runs-on: ubuntu-latest
-  #  needs: build-and-push
+  deploy-to-kubernetes:
+    runs-on: ubuntu-latest
+    needs: build-and-push
 
-  #  steps:
+    steps:
 
-  #  - name: Checkout repository
-  #    uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-  #  - name: Set up Kubeconfig
-  #    uses: azure/setup-kubectl@v2
-  #    with:
-  #      kubeconfig: ${{ secrets.KUBECONFIG }}  
+    - name: Set up Kubeconfig
+      uses: azure/setup-kubectl@v2
+      with:
+        kubeconfig: ${{ secrets.KUBECONFIG }}  
+      continue-on-error: true
 
-  #  - name: Apply Kubernetes Configurations
-  #    run: |
-  #      kubectl apply -f Kubernetes/deployment.yaml
-  #      kubectl apply -f Kubernetes/service.yaml
+    - name: Apply Kubernetes Configurations
+      run: |
+        kubectl apply -f Kubernetes/deployment.yaml
+        kubectl apply -f Kubernetes/service.yaml
+      continue-on-error: true
+
+  - name: Validate Kubernetes configuration
+      run: |
+        kubectl apply -f k8s/deployment.yaml --dry-run=client
+        kubectl apply -f k8s/service.yaml --dry-run=client
+      continue-on-error: true
 
 
     
