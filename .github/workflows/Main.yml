@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-app:1.0 .
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/hello-app:1.0 ./Docker
 
     - name: push Docker Image
       run: |
