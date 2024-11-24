@@ -292,7 +292,7 @@ Para este apartado tenemos 3 Jobs
             kubeconfig: ${{ secrets.KUBECONFIG }} 
     ```
 
-2. el segundo Job nos realiza el apply a los dos manifiestos
+2. El segundo Job nos realiza el apply a los dos manifiestos
     ```yml
     - name: Apply Kubernetes Configurations
         run: |
@@ -300,7 +300,7 @@ Para este apartado tenemos 3 Jobs
             kubectl apply -f Kubernetes/service.yaml
     ```
 
-3.  el tercer job valida como tal la configuración de los manifiestos:
+3.  El tercer job valida como tal la configuración de los manifiestos:
 
     ```yml
     - name: Validate Kubernetes configuration
